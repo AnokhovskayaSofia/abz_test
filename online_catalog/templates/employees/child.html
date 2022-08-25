@@ -1,0 +1,10 @@
+<ul>
+    {% for subemployee in employee_list %}
+        {% if employee == subemployee.parent %}
+        <li>
+            {{ subemployee.title }} ({{subemployee.last_name}} {{subemployee.first_name}})
+            {% include "employees/child.html" with employee=subemployee employee_list=employee_list %}
+        </li>
+        {%endif%}
+    {%endfor%}
+</ul>

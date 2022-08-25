@@ -1,0 +1,26 @@
+{% extends "base.html" %} 
+{% block title %}Online catalog of employees{% endblock %}
+{% block header %}Online catalog of employees{% endblock %}
+{% load cache %}
+
+
+{% block content %}
+    <h1>Employees List</h1>
+
+    {% if employee_list %}
+    <ul>
+
+      {% for employee in employee_list %}
+        {% if employee.parent == None %}
+        <li>
+            {{ employee.title }} ({{employee.last_name}} {{employee.first_name}})
+            {% include "employees/child.html" with employee=employee employee_list=employee_list %}
+        </li>
+        {% endif %}
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>There are no employees in list.</p>
+    {% endif %} 
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %} 
+{% block title %}Online catalog of employees{% endblock %}
+{% block header %}Online catalog of employees{% endblock %}
+{% load cache %}
+
+
+{% block content %}
+<div class="container">
+    <div class="container">
+        <!-- Вывод ленты записей -->
+        {% cache 20 index_page %}
+        {% for employee in page %}
+            {% if employee.parent == None %}
+                <div class="card-body">
+                    <p class="card-text">
+            {% endif %}
+            
+        {% endfor %}
+    {% endcache %} 
+    </div>
+    {% if page.has_other_pages %}
+        {% include "paginator.html" with items=page paginator=paginator%}
+    {% endif %}
+</div>
+    
+{% endblock %}
