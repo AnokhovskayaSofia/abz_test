@@ -2,7 +2,11 @@
     {% for subemployee in employee_list %}
         {% if employee == subemployee.parent %}
         <li>
-            {{ subemployee.title }} ({{subemployee.last_name}} {{subemployee.first_name}})
+            {% load thumbnail %}
+            {% thumbnail subemployee.image "40x40" crop="center" upscale=True as im %}
+              <img src="{{ im.url }}" />
+            {% endthumbnail %}
+            {{ subemployee.title }} <a class="card-link muted" href="{% url 'employee' subemployee.pk %}">({{subemployee.last_name}} {{subemployee.first_name}})</a>
             {% include "employees/child.html" with employee=subemployee employee_list=employee_list %}
         </li>
         {%endif%}

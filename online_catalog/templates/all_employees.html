@@ -1,0 +1,39 @@
+{% extends "base.html" %} 
+{% block title %}Online catalog of employees{% endblock %}
+{% block header %}Все сотрудники{% endblock %}
+{% load cache %}
+
+
+{% block content %}
+<div class="card mb-3 mt-1 shadow-sm">
+    <div class="container">
+        <!-- Вывод ленты записей -->
+        {% cache 20 index_page %}
+  <p>
+    {% if page %}
+    <ul>
+      
+      {% for employee in page %}
+        <li>
+            {% load thumbnail %}
+            {% thumbnail employee.image "40x40" crop="center" upscale=True as im %}
+              <img src="{{ im.url }}" />
+            {% endthumbnail %}      
+            {{ employee.title }} <a class="card-link muted" href="{% url 'employee' employee.pk %}">({{employee.last_name}} {{employee.first_name}})</a>
+        </li>
+
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>Нет сотрудников</p>
+    {% endif %}
+  </p>
+    {% endcache %} 
+    </div>
+    <!-- Вывод паджинатора -->
+    {% if page.has_other_pages %}
+        {% include "paginator.html" with items=page paginator=paginator%}
+    {% endif %}
+  </div>
+{% endblock %}

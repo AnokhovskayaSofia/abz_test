@@ -15,6 +15,9 @@ py==1.8.1
 pytest==5.3.5
 pytest-django==3.8.0
 python-dotenv==0.15.0
+sorl-thumbnail==12.6.3
 requests==2.22.0
 rsa==4.7.2
 sqlparse==0.3.1
+
+drf_extra_fields

@@ -1,19 +1,23 @@
 {% extends "base.html" %} 
 {% block title %}Online catalog of employees{% endblock %}
-{% block header %}Online catalog of employees{% endblock %}
+{% block header %}Онлайн каталог сотрудников{% endblock %}
 {% load cache %}
 
 
 {% block content %}
-    <h1>Employees List</h1>
-
+<div class="card mb-3 mt-1 shadow-sm">
+  <p>
     {% if employee_list %}
     <ul>
-
+      
       {% for employee in employee_list %}
         {% if employee.parent == None %}
         <li>
-            {{ employee.title }} ({{employee.last_name}} {{employee.first_name}})
+            {% load thumbnail %}
+            {% thumbnail employee.image "40x40" crop="center" upscale=True as im %}
+              <img src="{{ im.url }}" />
+            {% endthumbnail %}      
+            {{ employee.title }} <a class="card-link muted" href="{% url 'employee' employee.pk %}">({{employee.last_name}} {{employee.first_name}})</a>
             {% include "employees/child.html" with employee=employee employee_list=employee_list %}
         </li>
         {% endif %}
@@ -21,6 +25,8 @@
 
     </ul>
     {% else %}
-      <p>There are no employees in list.</p>
-    {% endif %} 
+      <p>Нет сотрудников</p>
+    {% endif %}
+  </p>
+  </div>
 {% endblock %}
