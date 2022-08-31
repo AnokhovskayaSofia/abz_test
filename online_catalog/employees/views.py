@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from rest_framework import filters, status, viewsets
 from rest_framework.response import Response
 from django.core.paginator import Paginator
@@ -9,6 +9,7 @@ from rest_framework.pagination import PageNumberPagination
 from online_catalog.settings import PAGE_SET_10
 from .models import Employee
 from .serializer import GetEmployeeSerializer
+from .forms import EmployeeForm
 
 
 class EmployeesListSet(generic.ListView):
@@ -39,4 +40,16 @@ class EmployeesViewSet(viewsets.ModelViewSet):
             'employee': employee
         }
         return render(request, 'employee.html', context)
+
+    def employee_edit(request, pk):
+        employee = get_object_or_404(Employee, pk=pk)
+        form = EmployeeForm(request.POST or None, files=request.FILES or None,
+                    instance=employee)
+
+        if not form.is_valid():
+            return render(request, "employee_edit.html", {"form": form, "employee": employee, })
+
+        form.save()
+        return redirect('employee', pk=pk)
+
 

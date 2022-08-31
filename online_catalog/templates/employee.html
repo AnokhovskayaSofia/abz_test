@@ -18,7 +18,12 @@
             <p>Зарплата: {{employee.salary}}р.</p>
             <p>Дата наима: {{employee.hired_date}}</p>
     </div> 
-</div>   
+</div>
+    {% if user.is_authenticated %}
+        <a class="btn btn-sm btn-info" href="{% url 'employee_edit' employee.pk %}" role="button">
+            Редактировать
+        </a>
+    {% endif %}
 </div>
 </p>
 
