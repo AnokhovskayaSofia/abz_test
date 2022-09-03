@@ -1,0 +1,31 @@
+{% extends "base.html" %} 
+{% block title %}Online catalog of employees{% endblock %}
+{% block header %}Все сотрудники{% endblock %}
+{% load cache %}
+
+{% block content %}
+    {% if "query" in request.GET %}
+        <h1>Сотрудники содержащие "{{ cd }}"</h1>
+        {% for employee in page %}
+        {% load thumbnail %}
+        {% thumbnail employee.image "40x40" crop="center" upscale=True as im %}
+          <img src="{{ im.url }}" />
+        {% endthumbnail %}      
+        {{ employee.title }} <a class="card-link muted" href="{% url 'employee' employee.pk %}">({{employee.last_name}} {{employee.first_name}})</a>
+        {% include "employees/child.html" with employee=employee employee_list=employee_list %}
+            {% empty %}
+            <p>Нет результатов по вашему запросу.</p>
+        {% endfor %}
+        <p><a href="{% url 'search_employee' %}">Искать еще раз</a></p>
+    {% else %}
+        <h1>Поиск сотрудника</h1>
+        <form action="." method="get">
+            {{ form.as_p }}
+            <input type="submit" value="Искать">
+        </form>
+    {% endif %}
+    <!-- Вывод паджинатора -->
+    {% if page.has_other_pages %}
+        {% include "paginator.html" with items=page paginator=paginator%}
+    {% endif %}
+{% endblock %}

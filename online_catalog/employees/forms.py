@@ -27,3 +27,7 @@ class EmployeeForm(forms.ModelForm):
             'parent' : 'Начальник сотрудника',
         }
 
+
+class SearchForm(forms.Form):
+    query = forms.CharField(label='Поиск')
+

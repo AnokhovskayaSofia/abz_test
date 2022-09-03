@@ -19,5 +19,9 @@ sorl-thumbnail==12.6.3
 requests==2.22.0
 rsa==4.7.2
 sqlparse==0.3.1
+pysolr==3.3.2
 
+openjdk-7-jre-headless
+jetty
+django-haystack
 drf_extra_fields

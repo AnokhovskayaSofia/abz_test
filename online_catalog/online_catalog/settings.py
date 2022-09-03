@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "sorl.thumbnail",
+    # 'haystack',
     'employees',
     'users',
 ]
@@ -142,6 +143,17 @@ LOGIN_REDIRECT_URL = "index"
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 # указываем директорию, в которую будут складываться файлы писем
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+
+# HAYSTACK_CONNECTIONS = {
+#     {
+#     'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+#         'URL': 'http://localhost:9001/solr/default',
+#         'TIMEOUT': 60 * 5,
+#         'INCLUDE_SPELLING': True,
+#         'BATCH_SIZE': 100,
+#         'EXCLUDED_INDEXES': ['thirdpartyapp.search_indexes.BarIndex'],
+#     },
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
